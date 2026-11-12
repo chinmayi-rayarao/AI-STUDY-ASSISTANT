@@ -40,6 +40,7 @@ Users can upload PDF study materials, generate summaries, understand difficult t
 🌐 Live Application
 
 Open AI Study Assistant
+click the url : https://ai-study-assistant-jsdaglcfp8kzq8lbcftcmh.streamlit.app/
 
 🎯 Objective
 
