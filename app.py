@@ -20,7 +20,7 @@ st.set_page_config(
 st.markdown("""
 <style>
 
-/* Main application background and default text */
+/* Main application background */
 .stApp,
 [data-testid="stAppViewContainer"],
 [data-testid="stMain"] {
@@ -28,8 +28,7 @@ st.markdown("""
     color: #111111 !important;
 }
 
-/* Force all normal text to black */
-.stApp,
+/* All normal text */
 .stApp p,
 .stApp span,
 .stApp label,
@@ -137,7 +136,6 @@ textarea::placeholder {
     color: #111111 !important;
 }
 
-/* Radio button accent */
 .stRadio input,
 [data-testid="stRadio"] input {
     accent-color: #388E3C !important;
@@ -151,7 +149,7 @@ textarea::placeholder {
     color: #111111 !important;
 }
 
-/* PDF uploader - mint green */
+/* PDF UPLOADER - FIXED VISIBILITY */
 [data-testid="stFileUploader"] {
     background: #D5F5D8 !important;
     border: 2px dashed #66BB6A !important;
@@ -159,13 +157,50 @@ textarea::placeholder {
     padding: 20px !important;
 }
 
-[data-testid="stFileUploader"] * {
+[data-testid="stFileUploader"] section {
+    background: #D5F5D8 !important;
+    border: none !important;
+}
+
+[data-testid="stFileUploader"] section > div {
+    background: #D5F5D8 !important;
+}
+
+[data-testid="stFileUploader"] label,
+[data-testid="stFileUploader"] span,
+[data-testid="stFileUploader"] small,
+[data-testid="stFileUploader"] p,
+[data-testid="stFileUploader"] div {
+    color: #111111 !important;
+}
+
+[data-testid="stFileUploader"] button {
+    background: #81C784 !important;
+    color: #111111 !important;
+    border: 1px solid #66BB6A !important;
+    border-radius: 8px !important;
+}
+
+[data-testid="stFileUploader"] button * {
+    color: #111111 !important;
+}
+
+[data-testid="stFileUploaderDropzone"] {
+    background: #D5F5D8 !important;
+}
+
+[data-testid="stFileUploaderDropzoneInstructions"] * {
     color: #111111 !important;
 }
 
 /* Welcome box */
 .welcome-box {
-    background: linear-gradient(135deg, #B9EBC0, #A5D6A7, #81C784) !important;
+    background: linear-gradient(
+        135deg,
+        #B9EBC0,
+        #A5D6A7,
+        #81C784
+    ) !important;
     padding: 55px 30px;
     border-radius: 20px;
     text-align: center;
@@ -234,7 +269,7 @@ textarea::placeholder {
     color: #111111 !important;
 }
 
-/* Alerts and messages */
+/* Alerts */
 [data-testid="stAlert"] * {
     color: #111111 !important;
 }
@@ -269,7 +304,7 @@ footer {
 
 load_dotenv()
 
-# Works locally with .env and on Streamlit Cloud with Secrets
+# Works locally and on Streamlit Cloud
 api_key = os.getenv("GROQ_API_KEY")
 
 if not api_key:
@@ -279,7 +314,10 @@ if not api_key:
         api_key = None
 
 if not api_key:
-    st.error("GROQ_API_KEY not found. Please configure it in your .env file or Streamlit Cloud Secrets.")
+    st.error(
+        "GROQ_API_KEY not found. "
+        "Please configure it in your .env file or Streamlit Cloud Secrets."
+    )
     st.stop()
 
 client = Groq(api_key=api_key)
@@ -343,6 +381,7 @@ def generate_ai_response(prompt):
 # --------------------------------------------------
 
 def generate_quiz(notes, number):
+
     prompt = f"""
 Create exactly {number} MCQs from these notes.
 
@@ -378,7 +417,10 @@ NOTES:
             messages=[
                 {
                     "role": "system",
-                    "content": "Generate accurate educational MCQs. Return valid JSON only."
+                    "content": (
+                        "Generate accurate educational MCQs. "
+                        "Return valid JSON only."
+                    )
                 },
                 {"role": "user", "content": prompt}
             ],
@@ -387,6 +429,7 @@ NOTES:
         )
 
         content = response.choices[0].message.content.strip()
+
         content = re.sub(r"^```(?:json)?\s*", "", content)
         content = re.sub(r"\s*```$", "", content)
 
@@ -401,15 +444,23 @@ NOTES:
             raise ValueError("Incorrect number of questions.")
 
         for q in questions:
+
             if not all(
-                k in q for k in ["question", "options", "answer", "explanation"]
+                k in q for k in [
+                    "question",
+                    "options",
+                    "answer",
+                    "explanation"
+                ]
             ):
                 raise ValueError("A question is missing information.")
 
             if q["answer"] not in ["A", "B", "C", "D"]:
                 raise ValueError("Invalid answer.")
 
-            if not all(k in q["options"] for k in ["A", "B", "C", "D"]):
+            if not all(
+                k in q["options"] for k in ["A", "B", "C", "D"]
+            ):
                 raise ValueError("Missing options.")
 
         return questions
@@ -428,6 +479,7 @@ st.sidebar.caption("Your personal learning companion")
 st.sidebar.markdown("---")
 
 if st.sidebar.button("🏠 Home", use_container_width=True):
+
     st.session_state.page = "Home"
     st.session_state.show_features = False
     st.rerun()
@@ -441,6 +493,7 @@ for feature in [
     "Generate Questions",
     "Practice Quiz"
 ]:
+
     if st.sidebar.button(feature, use_container_width=True):
         go_to_page(feature)
         st.rerun()
@@ -474,7 +527,8 @@ if st.session_state.page == "Home":
     col1, col2, col3 = st.columns([2, 1, 2])
 
     with col2:
-        if st.button("🏠 HOME", use_container_width=True):
+
+        if st.button("🚀 GET STARTED", use_container_width=True):
             st.session_state.show_features = True
             st.rerun()
 
@@ -486,6 +540,7 @@ if st.session_state.page == "Home":
         col1, col2 = st.columns(2)
 
         with col1:
+
             st.markdown("""
             <div class="feature-card">
                 <h3>📄 Summarize Notes</h3>
@@ -498,6 +553,7 @@ if st.session_state.page == "Home":
                 st.rerun()
 
         with col2:
+
             st.markdown("""
             <div class="feature-card">
                 <h3>💡 Explain a Topic</h3>
@@ -512,6 +568,7 @@ if st.session_state.page == "Home":
         col3, col4 = st.columns(2)
 
         with col3:
+
             st.markdown("""
             <div class="feature-card">
                 <h3>📝 Generate Questions</h3>
@@ -524,6 +581,7 @@ if st.session_state.page == "Home":
                 st.rerun()
 
         with col4:
+
             st.markdown("""
             <div class="feature-card">
                 <h3>🎯 Practice Quiz</h3>
@@ -536,6 +594,7 @@ if st.session_state.page == "Home":
                 st.rerun()
 
     else:
+
         st.markdown(
             "<p style='text-align:center; color:#111111;'>"
             "Click the Home button above to explore all available features."
@@ -551,7 +610,10 @@ if st.session_state.page == "Home":
 elif st.session_state.page == "Summarize Notes":
 
     st.title("📄 Summarize Your Notes")
-    st.write("Upload your PDF and generate an AI-powered summary.")
+
+    st.write(
+        "Upload your PDF and generate an AI-powered summary."
+    )
 
     uploaded_file = st.file_uploader(
         "Upload your PDF file",
@@ -563,6 +625,7 @@ elif st.session_state.page == "Summarize Notes":
         if st.button("Extract PDF Text"):
 
             try:
+
                 reader = PdfReader(uploaded_file)
                 extracted_text = ""
 
@@ -570,12 +633,18 @@ elif st.session_state.page == "Summarize Notes":
                     extracted_text += pdf_page.extract_text() or ""
 
                 if extracted_text.strip():
+
                     st.session_state.pdf_text = extracted_text
                     st.success("PDF text extracted successfully!")
+
                 else:
-                    st.warning("No readable text found in this PDF.")
+
+                    st.warning(
+                        "No readable text found in this PDF."
+                    )
 
             except Exception as e:
+
                 st.error(f"PDF extraction failed: {str(e)}")
 
     if st.session_state.pdf_text:
@@ -583,6 +652,7 @@ elif st.session_state.page == "Summarize Notes":
         st.success("Your study notes are ready!")
 
         with st.expander("View Extracted PDF Text"):
+
             st.text_area(
                 "Extracted Text",
                 st.session_state.pdf_text,
@@ -591,7 +661,9 @@ elif st.session_state.page == "Summarize Notes":
 
         if st.button("Generate AI Summary"):
 
-            with st.spinner("AI is preparing your summary..."):
+            with st.spinner(
+                "AI is preparing your summary..."
+            ):
 
                 summary = generate_ai_response(
                     f"""
@@ -615,7 +687,10 @@ NOTES:
 elif st.session_state.page == "Explain a Topic":
 
     st.title("💡 Explain a Topic")
-    st.write("Understand difficult topics with easy explanations.")
+
+    st.write(
+        "Understand difficult topics with easy explanations."
+    )
 
     topic = st.text_input(
         "Enter your topic",
@@ -626,7 +701,9 @@ elif st.session_state.page == "Explain a Topic":
 
         if topic.strip():
 
-            with st.spinner("AI is preparing your explanation..."):
+            with st.spinner(
+                "AI is preparing your explanation..."
+            ):
 
                 explanation = generate_ai_response(
                     f"""
@@ -640,6 +717,7 @@ real-life example, advantages and conclusion.
             st.markdown(explanation)
 
         else:
+
             st.warning("Please enter a topic first.")
 
 
@@ -653,7 +731,9 @@ elif st.session_state.page == "Generate Questions":
 
     if not st.session_state.pdf_text:
 
-        st.warning("Please upload and extract a PDF first.")
+        st.warning(
+            "Please upload and extract a PDF first."
+        )
 
     else:
 
@@ -685,6 +765,7 @@ NOTES:
 """
 
             with st.spinner("Generating questions..."):
+
                 questions = generate_ai_response(prompt)
 
             st.subheader("✨ Generated Questions")
@@ -701,7 +782,9 @@ elif st.session_state.page == "Practice Quiz":
 
     if not st.session_state.pdf_text:
 
-        st.warning("Please upload and extract a PDF first.")
+        st.warning(
+            "Please upload and extract a PDF first."
+        )
 
     else:
 
@@ -724,16 +807,20 @@ elif st.session_state.page == "Practice Quiz":
                     )
 
                 if quiz:
+
                     st.session_state.quiz_data = quiz
                     st.session_state.quiz_answers = {}
                     st.session_state.quiz_submitted = False
+
                     st.rerun()
 
         else:
 
             questions = st.session_state.quiz_data
 
-            st.subheader(f"You have {len(questions)} questions")
+            st.subheader(
+                f"You have {len(questions)} questions"
+            )
 
             if not st.session_state.quiz_submitted:
 
@@ -744,7 +831,8 @@ elif st.session_state.page == "Practice Quiz":
                     for i, question in enumerate(questions):
 
                         st.markdown(
-                            f"**Question {i + 1}: {question['question']}**"
+                            f"**Question {i + 1}: "
+                            f"{question['question']}**"
                         )
 
                         options = question["options"]
@@ -770,13 +858,15 @@ elif st.session_state.page == "Practice Quiz":
 
                         st.session_state.quiz_answers = selected_answers
                         st.session_state.quiz_submitted = True
+
                         st.rerun()
 
             else:
 
                 score = sum(
                     1 for i, question in enumerate(questions)
-                    if st.session_state.quiz_answers.get(i) == question["answer"]
+                    if st.session_state.quiz_answers.get(i)
+                    == question["answer"]
                 )
 
                 percentage = score / len(questions) * 100
@@ -785,20 +875,40 @@ elif st.session_state.page == "Practice Quiz":
 
                 col1, col2, col3 = st.columns(3)
 
-                col1.metric("Total Questions", len(questions))
-                col2.metric("Correct Answers", score)
-                col3.metric("Your Score", f"{percentage:.1f}%")
+                col1.metric(
+                    "Total Questions",
+                    len(questions)
+                )
+
+                col2.metric(
+                    "Correct Answers",
+                    score
+                )
+
+                col3.metric(
+                    "Your Score",
+                    f"{percentage:.1f}%"
+                )
 
                 st.progress(percentage / 100)
 
                 if percentage >= 80:
-                    st.success("Excellent work! Great understanding!")
+
+                    st.success(
+                        "Excellent work! Great understanding!"
+                    )
 
                 elif percentage >= 50:
-                    st.info("Good effort! Keep practicing.")
+
+                    st.info(
+                        "Good effort! Keep practicing."
+                    )
 
                 else:
-                    st.warning("Keep learning and try again!")
+
+                    st.warning(
+                        "Keep learning and try again!"
+                    )
 
                 st.markdown("---")
                 st.subheader("📋 Answer Review")
@@ -809,7 +919,8 @@ elif st.session_state.page == "Practice Quiz":
                     correct_answer = question["answer"]
 
                     st.markdown(
-                        f"**Question {i + 1}: {question['question']}**"
+                        f"**Question {i + 1}: "
+                        f"{question['question']}**"
                     )
 
                     if user_answer == correct_answer:
@@ -836,6 +947,7 @@ elif st.session_state.page == "Practice Quiz":
                     st.session_state.quiz_data = None
                     st.session_state.quiz_answers = {}
                     st.session_state.quiz_submitted = False
+
                     st.rerun()
 
 
