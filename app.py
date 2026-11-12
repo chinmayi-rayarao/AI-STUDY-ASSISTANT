@@ -14,119 +14,238 @@ st.set_page_config(
 )
 
 # --------------------------------------------------
-# PINK THEME
+# MINT GREEN THEME - BLACK TEXT EVERYWHERE
 # --------------------------------------------------
 
 st.markdown("""
 <style>
 
-/* Entire application background */
-.stApp {
-    background: #fff0f6 !important;
-    color: #831843 !important;
+/* Main application background and default text */
+.stApp,
+[data-testid="stAppViewContainer"],
+[data-testid="stMain"] {
+    background: #E8F5E9 !important;
+    color: #111111 !important;
+}
+
+/* Force all normal text to black */
+.stApp,
+.stApp p,
+.stApp span,
+.stApp label,
+.stApp div,
+.stApp li,
+.stApp strong,
+.stApp b,
+.stApp h1,
+.stApp h2,
+.stApp h3,
+.stApp h4,
+.stApp h5,
+.stApp h6,
+.stMarkdown,
+[data-testid="stMarkdownContainer"],
+[data-testid="stWidgetLabel"],
+[data-testid="stCaptionContainer"] {
+    color: #111111 !important;
 }
 
 /* Sidebar */
 [data-testid="stSidebar"] {
-    background: #fce4ef !important;
-    border-right: 1px solid #f5b8d2;
+    background: #C8E6C9 !important;
+    border-right: 1px solid #81C784 !important;
 }
 
 [data-testid="stSidebar"] * {
-    color: #831843 !important;
+    color: #111111 !important;
 }
 
-/* All headings */
-h1, h2, h3, h4 {
-    color: #9d174d !important;
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    color: #111111 !important;
+    font-weight: 700 !important;
 }
 
-/* Pink buttons */
+/* Buttons */
 .stButton > button,
 .stFormSubmitButton > button {
-    background: #ec4899 !important;
-    color: white !important;
-    border: none !important;
+    background: #81C784 !important;
+    color: #111111 !important;
+    border: 1px solid #66BB6A !important;
     border-radius: 12px !important;
-    font-weight: 600 !important;
+    font-weight: 700 !important;
+}
+
+.stButton > button *,
+.stFormSubmitButton > button * {
+    color: #111111 !important;
 }
 
 .stButton > button:hover,
 .stFormSubmitButton > button:hover {
-    background: #be185d !important;
-    color: white !important;
+    background: #66BB6A !important;
+    color: #111111 !important;
+    border: 1px solid #388E3C !important;
 }
 
-/* Light green PDF upload */
+/* Text input fields */
+.stTextInput input,
+.stTextArea textarea,
+input,
+textarea {
+    background: #F7FFF7 !important;
+    color: #111111 !important;
+    -webkit-text-fill-color: #111111 !important;
+    border: 1px solid #81C784 !important;
+    border-radius: 10px !important;
+    caret-color: #111111 !important;
+}
+
+/* Input placeholders */
+.stTextInput input::placeholder,
+.stTextArea textarea::placeholder,
+input::placeholder,
+textarea::placeholder {
+    color: #555555 !important;
+    -webkit-text-fill-color: #555555 !important;
+    opacity: 1 !important;
+}
+
+/* Select boxes and dropdowns */
+[data-baseweb="select"],
+[data-baseweb="select"] *,
+[data-baseweb="popover"],
+[data-baseweb="menu"],
+[data-baseweb="menu"] * {
+    background-color: #F7FFF7 !important;
+    color: #111111 !important;
+}
+
+/* Slider */
+[data-testid="stSlider"] * {
+    color: #111111 !important;
+}
+
+/* Radio buttons and quiz options */
+.stRadio,
+.stRadio *,
+[data-testid="stRadio"],
+[data-testid="stRadio"] *,
+[role="radiogroup"],
+[role="radiogroup"] *,
+[role="radio"] {
+    color: #111111 !important;
+}
+
+/* Radio button accent */
+.stRadio input,
+[data-testid="stRadio"] input {
+    accent-color: #388E3C !important;
+}
+
+/* Checkboxes */
+.stCheckbox,
+.stCheckbox *,
+[data-testid="stCheckbox"],
+[data-testid="stCheckbox"] * {
+    color: #111111 !important;
+}
+
+/* PDF uploader - mint green */
 [data-testid="stFileUploader"] {
-    background: #e5f9e5 !important;
-    border: 2px dashed #86c98a !important;
+    background: #D5F5D8 !important;
+    border: 2px dashed #66BB6A !important;
     border-radius: 15px !important;
     padding: 20px !important;
 }
 
-/* Pink welcome box */
+[data-testid="stFileUploader"] * {
+    color: #111111 !important;
+}
+
+/* Welcome box */
 .welcome-box {
-    background: linear-gradient(135deg, #ec4899, #be185d, #9d174d) !important;
-    padding: 65px 35px;
+    background: linear-gradient(135deg, #B9EBC0, #A5D6A7, #81C784) !important;
+    padding: 55px 30px;
     border-radius: 20px;
     text-align: center;
     margin-bottom: 25px;
+    border: 1px solid #81C784;
 }
 
 .welcome-box h1 {
-    color: white !important;
-    font-size: 42px;
+    color: #111111 !important;
+    font-size: 40px;
 }
 
 .welcome-box p {
-    color: white !important;
+    color: #111111 !important;
     font-size: 18px;
 }
 
-/* Pink feature cards */
+/* Feature cards */
 .feature-card {
-    background: #fce4ef !important;
+    background: #C8E6C9 !important;
     padding: 25px;
     border-radius: 16px;
-    border: 1px solid #f5b8d2;
+    border: 1px solid #81C784;
     min-height: 145px;
     margin-bottom: 12px;
 }
 
-.feature-card h3 {
-    color: #be185d !important;
-}
-
+.feature-card h3,
 .feature-card p {
-    color: #831843 !important;
+    color: #111111 !important;
 }
 
-/* Expander */
+/* Expanders */
 [data-testid="stExpander"] {
-    background: #fff7fb !important;
-    border-radius: 12px;
+    background: #D5F5D8 !important;
+    border: 1px solid #81C784 !important;
+    border-radius: 12px !important;
+}
+
+[data-testid="stExpander"] * {
+    color: #111111 !important;
 }
 
 /* Metrics */
 [data-testid="stMetric"] {
-    background: #fce4ef !important;
+    background: #C8E6C9 !important;
     padding: 15px;
     border-radius: 12px;
-    border: 1px solid #f5b8d2;
+    border: 1px solid #81C784;
 }
 
-/* Input fields */
-.stTextInput input,
-.stTextArea textarea,
-.stSelectbox div[data-baseweb="select"] {
-    background: #fff7fb !important;
-    border-radius: 10px !important;
+[data-testid="stMetric"] * {
+    color: #111111 !important;
 }
 
-/* Radio selection accent */
-.stRadio {
-    accent-color: #ec4899 !important;
+/* Forms */
+[data-testid="stForm"] {
+    background: #E8F5E9 !important;
+    border: 1px solid #A5D6A7 !important;
+    border-radius: 14px !important;
+    padding: 15px !important;
+}
+
+/* Tabs */
+[data-testid="stTabs"] * {
+    color: #111111 !important;
+}
+
+/* Alerts and messages */
+[data-testid="stAlert"] * {
+    color: #111111 !important;
+}
+
+/* Progress bar */
+[data-testid="stProgress"] > div {
+    background: #C8E6C9 !important;
+}
+
+[data-testid="stProgress"] [role="progressbar"] {
+    background: #66BB6A !important;
 }
 
 /* Page spacing */
@@ -135,6 +254,7 @@ h1, h2, h3, h4 {
     padding-bottom: 2rem;
 }
 
+/* Footer */
 footer {
     visibility: hidden;
 }
@@ -143,19 +263,33 @@ footer {
 """, unsafe_allow_html=True)
 
 
-# GROQ API
+# --------------------------------------------------
+# GROQ API CONFIGURATION
+# --------------------------------------------------
+
 load_dotenv()
+
+# Works locally with .env and on Streamlit Cloud with Secrets
 api_key = os.getenv("GROQ_API_KEY")
 
 if not api_key:
-    st.error("GROQ_API_KEY not found. Check your .env file.")
+    try:
+        api_key = st.secrets.get("GROQ_API_KEY")
+    except Exception:
+        api_key = None
+
+if not api_key:
+    st.error("GROQ_API_KEY not found. Please configure it in your .env file or Streamlit Cloud Secrets.")
     st.stop()
 
 client = Groq(api_key=api_key)
 MODEL = "openai/gpt-oss-20b"
 
 
+# --------------------------------------------------
 # SESSION STATE
+# --------------------------------------------------
+
 defaults = {
     "pdf_text": "",
     "quiz_data": None,
@@ -175,7 +309,10 @@ def go_to_page(page):
     st.session_state.show_features = True
 
 
+# --------------------------------------------------
 # AI RESPONSE
+# --------------------------------------------------
+
 def generate_ai_response(prompt):
     try:
         response = client.chat.completions.create(
@@ -194,13 +331,17 @@ def generate_ai_response(prompt):
             temperature=0.5,
             max_completion_tokens=3000
         )
+
         return response.choices[0].message.content
 
     except Exception as e:
         return f"Something went wrong: {str(e)}"
 
 
+# --------------------------------------------------
 # QUIZ GENERATION
+# --------------------------------------------------
+
 def generate_quiz(notes, number):
     prompt = f"""
 Create exactly {number} MCQs from these notes.
@@ -260,10 +401,14 @@ NOTES:
             raise ValueError("Incorrect number of questions.")
 
         for q in questions:
-            if not all(k in q for k in ["question", "options", "answer", "explanation"]):
+            if not all(
+                k in q for k in ["question", "options", "answer", "explanation"]
+            ):
                 raise ValueError("A question is missing information.")
+
             if q["answer"] not in ["A", "B", "C", "D"]:
                 raise ValueError("Invalid answer.")
+
             if not all(k in q["options"] for k in ["A", "B", "C", "D"]):
                 raise ValueError("Missing options.")
 
@@ -274,7 +419,10 @@ NOTES:
         return None
 
 
+# --------------------------------------------------
 # SIDEBAR
+# --------------------------------------------------
+
 st.sidebar.markdown("# 📚 AI Study Assistant")
 st.sidebar.caption("Your personal learning companion")
 st.sidebar.markdown("---")
@@ -301,7 +449,10 @@ st.sidebar.markdown("---")
 st.sidebar.caption("✨ Powered by Groq AI")
 
 
+# --------------------------------------------------
 # HOME PAGE
+# --------------------------------------------------
+
 if st.session_state.page == "Home":
 
     st.markdown("""
@@ -315,7 +466,8 @@ if st.session_state.page == "Home":
     """, unsafe_allow_html=True)
 
     st.markdown(
-        "<h3 style='text-align:center;'>Explore Your Learning Space</h3>",
+        "<h3 style='text-align:center; color:#111111;'>"
+        "Explore Your Learning Space</h3>",
         unsafe_allow_html=True
     )
 
@@ -385,14 +537,17 @@ if st.session_state.page == "Home":
 
     else:
         st.markdown(
-            "<p style='text-align:center;color:#9d174d;'>"
+            "<p style='text-align:center; color:#111111;'>"
             "Click the Home button above to explore all available features."
             "</p>",
             unsafe_allow_html=True
         )
 
 
+# --------------------------------------------------
 # SUMMARIZE NOTES
+# --------------------------------------------------
+
 elif st.session_state.page == "Summarize Notes":
 
     st.title("📄 Summarize Your Notes")
@@ -404,7 +559,9 @@ elif st.session_state.page == "Summarize Notes":
     )
 
     if uploaded_file is not None:
+
         if st.button("Extract PDF Text"):
+
             try:
                 reader = PdfReader(uploaded_file)
                 extracted_text = ""
@@ -422,6 +579,7 @@ elif st.session_state.page == "Summarize Notes":
                 st.error(f"PDF extraction failed: {str(e)}")
 
     if st.session_state.pdf_text:
+
         st.success("Your study notes are ready!")
 
         with st.expander("View Extracted PDF Text"):
@@ -432,7 +590,9 @@ elif st.session_state.page == "Summarize Notes":
             )
 
         if st.button("Generate AI Summary"):
+
             with st.spinner("AI is preparing your summary..."):
+
                 summary = generate_ai_response(
                     f"""
 Summarize these notes in simple English.
@@ -448,7 +608,10 @@ NOTES:
             st.markdown(summary)
 
 
+# --------------------------------------------------
 # EXPLAIN A TOPIC
+# --------------------------------------------------
+
 elif st.session_state.page == "Explain a Topic":
 
     st.title("💡 Explain a Topic")
@@ -460,8 +623,11 @@ elif st.session_state.page == "Explain a Topic":
     )
 
     if st.button("Explain Topic"):
+
         if topic.strip():
+
             with st.spinner("AI is preparing your explanation..."):
+
                 explanation = generate_ai_response(
                     f"""
 Explain {topic} in simple English.
@@ -472,19 +638,25 @@ real-life example, advantages and conclusion.
 
             st.subheader("✨ AI Explanation")
             st.markdown(explanation)
+
         else:
             st.warning("Please enter a topic first.")
 
 
+# --------------------------------------------------
 # GENERATE QUESTIONS
+# --------------------------------------------------
+
 elif st.session_state.page == "Generate Questions":
 
     st.title("📝 Generate Questions")
 
     if not st.session_state.pdf_text:
+
         st.warning("Please upload and extract a PDF first.")
 
     else:
+
         question_type = st.selectbox(
             "Select Question Type",
             [
@@ -494,9 +666,15 @@ elif st.session_state.page == "Generate Questions":
             ]
         )
 
-        number = st.slider("Number of Questions", 5, 20, 5)
+        number = st.slider(
+            "Number of Questions",
+            5,
+            20,
+            5
+        )
 
         if st.button("Generate Questions"):
+
             prompt = f"""
 Generate {number} {question_type} from these notes.
 Number each question and provide answers.
@@ -505,6 +683,7 @@ Use simple English.
 NOTES:
 {st.session_state.pdf_text[:12000]}
 """
+
             with st.spinner("Generating questions..."):
                 questions = generate_ai_response(prompt)
 
@@ -512,21 +691,33 @@ NOTES:
             st.markdown(questions)
 
 
+# --------------------------------------------------
 # PRACTICE QUIZ
+# --------------------------------------------------
+
 elif st.session_state.page == "Practice Quiz":
 
     st.title("🎯 Practice Quiz")
 
     if not st.session_state.pdf_text:
+
         st.warning("Please upload and extract a PDF first.")
 
     else:
+
         if st.session_state.quiz_data is None:
 
-            number = st.slider("Choose Number of Questions", 3, 10, 5)
+            number = st.slider(
+                "Choose Number of Questions",
+                3,
+                10,
+                5
+            )
 
             if st.button("Generate Practice Quiz"):
+
                 with st.spinner("Preparing your quiz..."):
+
                     quiz = generate_quiz(
                         st.session_state.pdf_text,
                         number
@@ -539,6 +730,7 @@ elif st.session_state.page == "Practice Quiz":
                     st.rerun()
 
         else:
+
             questions = st.session_state.quiz_data
 
             st.subheader(f"You have {len(questions)} questions")
@@ -546,9 +738,11 @@ elif st.session_state.page == "Practice Quiz":
             if not st.session_state.quiz_submitted:
 
                 with st.form("quiz_form"):
+
                     selected_answers = {}
 
                     for i, question in enumerate(questions):
+
                         st.markdown(
                             f"**Question {i + 1}: {question['question']}**"
                         )
@@ -565,16 +759,21 @@ elif st.session_state.page == "Practice Quiz":
                         )
 
                         selected_answers[i] = answer
+
                         st.markdown("---")
 
-                    submitted = st.form_submit_button("Submit My Answers")
+                    submitted = st.form_submit_button(
+                        "Submit My Answers"
+                    )
 
                     if submitted:
+
                         st.session_state.quiz_answers = selected_answers
                         st.session_state.quiz_submitted = True
                         st.rerun()
 
             else:
+
                 score = sum(
                     1 for i, question in enumerate(questions)
                     if st.session_state.quiz_answers.get(i) == question["answer"]
@@ -585,6 +784,7 @@ elif st.session_state.page == "Practice Quiz":
                 st.subheader("🏆 Your Quiz Results")
 
                 col1, col2, col3 = st.columns(3)
+
                 col1.metric("Total Questions", len(questions))
                 col2.metric("Correct Answers", score)
                 col3.metric("Your Score", f"{percentage:.1f}%")
@@ -593,8 +793,10 @@ elif st.session_state.page == "Practice Quiz":
 
                 if percentage >= 80:
                     st.success("Excellent work! Great understanding!")
+
                 elif percentage >= 50:
                     st.info("Good effort! Keep practicing.")
+
                 else:
                     st.warning("Keep learning and try again!")
 
@@ -602,6 +804,7 @@ elif st.session_state.page == "Practice Quiz":
                 st.subheader("📋 Answer Review")
 
                 for i, question in enumerate(questions):
+
                     user_answer = st.session_state.quiz_answers.get(i)
                     correct_answer = question["answer"]
 
@@ -610,27 +813,40 @@ elif st.session_state.page == "Practice Quiz":
                     )
 
                     if user_answer == correct_answer:
-                        st.success(f"Correct! Your answer: {user_answer}")
+
+                        st.success(
+                            f"Correct! Your answer: {user_answer}"
+                        )
+
                     else:
+
                         st.error(
                             f"Your answer: {user_answer or 'Not answered'} | "
                             f"Correct answer: {correct_answer}"
                         )
 
-                    st.write(f"**Explanation:** {question['explanation']}")
+                    st.write(
+                        f"**Explanation:** {question['explanation']}"
+                    )
+
                     st.markdown("---")
 
                 if st.button("Try Another Quiz"):
+
                     st.session_state.quiz_data = None
                     st.session_state.quiz_answers = {}
                     st.session_state.quiz_submitted = False
                     st.rerun()
 
 
+# --------------------------------------------------
 # FOOTER
+# --------------------------------------------------
+
 st.markdown("---")
+
 st.markdown(
-    "<center style='color:#9d174d;'>"
+    "<center style='color:#111111;'>"
     "📚 AI Study Assistant | Powered by Groq AI"
     "</center>",
     unsafe_allow_html=True
